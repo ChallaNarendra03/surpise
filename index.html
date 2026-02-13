@@ -9,7 +9,7 @@ body{
   margin:0;
   padding:0;
   background:black;
-  font-family: 'Segoe UI', sans-serif;
+  font-family:'Segoe UI', sans-serif;
   overflow:hidden;
   color:white;
 }
@@ -51,21 +51,21 @@ body{
   color:red;
 }
 
-/* MAIN CONTENT */
+/* MAIN */
 #mainContent{
   display:none;
   opacity:0;
   transition:opacity 2s ease;
 }
 
-/* BACKGROUND WITH SLOW ZOOM */
+/* BACKGROUND WITH ZOOM */
 .background{
   position:fixed;
   width:100%;
   height:100vh;
   background:url('photo1.jpg') center/cover no-repeat;
   animation:zoom 20s infinite alternate;
-  z-index:-2;
+  z-index:-3;
 }
 
 @keyframes zoom{
@@ -79,17 +79,18 @@ body{
   width:100%;
   height:100vh;
   background:rgba(0,0,0,0.6);
-  z-index:-1;
+  z-index:-2;
 }
 
-/* BIG CENTER NAME */
+/* TOP NAME */
 .name{
   position:absolute;
-  top:40%;
+  top:30px;
   width:100%;
   text-align:center;
-  font-size:70px;
-  letter-spacing:5px;
+  font-size:55px;
+  letter-spacing:4px;
+  font-weight:bold;
   opacity:0;
   animation:fadeIn 3s forwards;
 }
@@ -98,19 +99,21 @@ body{
   to{opacity:1;}
 }
 
-/* MESSAGE BELOW */
+/* FULL MESSAGE */
 .message{
   position:absolute;
-  top:60%;
+  bottom:15%;
   width:100%;
   text-align:center;
   font-size:22px;
+  line-height:1.6;
+  padding:0 20px;
   opacity:0;
   animation:fadeIn 3s forwards;
   animation-delay:2s;
 }
 
-/* FLOATING LIGHT PARTICLES */
+/* FLOATING PARTICLES */
 .particle{
   position:absolute;
   width:4px;
@@ -147,8 +150,17 @@ body{
 <div class="name">Chandana</div>
 
 <div class="message">
-You are not my lover… <br><br>
-But you are the only person I trust completely.
+You are not my lover…<br><br>
+
+But you are the only person I trust completely.<br><br>
+
+Even if I don’t talk much in front of you,<br>
+my heart speaks a thousand words when I see you.<br><br>
+
+Seeing you even for a few seconds<br>
+feels like the biggest adventure of my life.<br><br>
+
+Thank you for being my world, Chandana 💖
 </div>
 
 <audio id="bgMusic" loop>
@@ -180,7 +192,7 @@ function createParticles(){
     p.style.left=Math.random()*100+"vw";
     document.body.appendChild(p);
     setTimeout(()=>p.remove(),10000);
-  },500);
+  },600);
 }
 
 </script>
