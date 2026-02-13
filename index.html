@@ -3,16 +3,16 @@
 <head>
 <title>For Chandana 💖</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<style>
 
+<style>
 body{
   margin:0;
   padding:0;
   background:black;
-  overflow:hidden;
   font-family:'Segoe UI',sans-serif;
   color:white;
   text-align:center;
+  overflow:hidden;
 }
 
 /* PASSWORD SCREEN */
@@ -27,7 +27,7 @@ body{
   align-items:center;
 }
 
-input{
+#passwordScreen input{
   padding:10px;
   font-size:18px;
   border-radius:10px;
@@ -35,7 +35,7 @@ input{
   text-align:center;
 }
 
-button{
+#passwordScreen button{
   margin-top:10px;
   padding:8px 20px;
   font-size:16px;
@@ -56,16 +56,29 @@ button{
   display:none;
 }
 
-/* Background slider */
-.slider img{
+/* FIXED CENTERED SLIDER */
+.slider{
   position:fixed;
+  top:0;
+  left:0;
   width:100%;
   height:100vh;
-  object-fit:cover;
-  opacity:0;
-  animation:slide 15s infinite;
+  overflow:hidden;
   z-index:-2;
 }
+
+.slider img{
+  position:absolute;
+  top:50%;
+  left:50%;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transform:translate(-50%,-50%);
+  opacity:0;
+  animation:slide 15s infinite;
+}
+
 .slider img:nth-child(1){animation-delay:0s;}
 .slider img:nth-child(2){animation-delay:5s;}
 .slider img:nth-child(3){animation-delay:10s;}
@@ -78,19 +91,9 @@ button{
   100%{opacity:0;}
 }
 
-/* Floating hearts */
-.heart{
-  position:absolute;
-  animation: float 6s linear infinite;
-}
-@keyframes float{
-  0%{transform:translateY(100vh);opacity:1;}
-  100%{transform:translateY(-10vh);opacity:0;}
-}
-
 /* Countdown */
 #countdown{
-  font-size:40px;
+  font-size:45px;
   margin-top:40vh;
 }
 
@@ -103,11 +106,23 @@ button{
   background:linear-gradient(45deg,#ff0080,#ffcc00);
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
-  animation: glow 2s infinite alternate;
+  animation:glow 2s infinite alternate;
 }
+
 @keyframes glow{
   from{text-shadow:0 0 20px #ff0080;}
   to{text-shadow:0 0 40px #ffcc00;}
+}
+
+/* Floating Hearts */
+.heart{
+  position:absolute;
+  animation:float 6s linear infinite;
+}
+
+@keyframes float{
+  0%{transform:translateY(100vh);opacity:1;}
+  100%{transform:translateY(-10vh);opacity:0;}
 }
 
 /* Envelope */
@@ -121,7 +136,7 @@ button{
 /* Letter */
 #letter{
   display:none;
-  width:80%;
+  width:85%;
   margin:20px auto;
   font-size:20px;
   white-space:pre-line;
@@ -136,19 +151,19 @@ button{
   border-radius:50%;
   animation:explode 1s ease-out forwards;
 }
+
 @keyframes explode{
   to{
     transform:translate(var(--x),var(--y));
     opacity:0;
   }
 }
-
 </style>
 </head>
 
 <body>
 
-<!-- PASSWORD SCREEN -->
+<!-- PASSWORD -->
 <div id="passwordScreen">
   <h2>Enter the Secret Password 💖</h2>
   <input type="password" id="passwordInput" placeholder="Enter password">
@@ -169,7 +184,7 @@ button{
 
 <div class="name">Chandana 💖</div>
 
-<div class="envelope" onclick="openLetter()">💌</div>
+<div class="envelope" onclick="openLetter()"></div>
 
 <div id="letter"></div>
 
@@ -193,7 +208,7 @@ function checkPassword(){
   }
 }
 
-/* START EXPERIENCE */
+/* EXPERIENCE START */
 function startExperience(){
   let count=3;
   let countdown=document.getElementById("countdown");
@@ -214,25 +229,26 @@ function startExperience(){
   },1000);
 }
 
-/* Floating Hearts */
+/* HEARTS */
 function createHearts(){
   setInterval(()=>{
     let heart=document.createElement("div");
     heart.className="heart";
     heart.innerHTML="❤️";
     heart.style.left=Math.random()*100+"vw";
-    heart.style.fontSize=Math.random()*20+10+"px";
+    heart.style.fontSize=Math.random()*20+15+"px";
     heart.style.animationDuration=Math.random()*3+3+"s";
     document.body.appendChild(heart);
     setTimeout(()=>heart.remove(),6000);
   },500);
 }
 
-/* Typing Effect */
+/* LETTER */
 function openLetter(){
   document.querySelector(".envelope").style.display="none";
   let letter=document.getElementById("letter");
   letter.style.display="block";
+
   let text=`You are not my lover…
 But you are the only person I trust completely.
 
@@ -257,15 +273,15 @@ Thank you for being my world, Chandana 💖`;
   typing();
 }
 
-/* Fireworks */
+/* FIREWORKS */
 function fireworks(){
-  for(let i=0;i<50;i++){
+  for(let i=0;i<60;i++){
     let fire=document.createElement("div");
     fire.className="firework";
     fire.style.left="50%";
     fire.style.top="50%";
-    fire.style.setProperty("--x",(Math.random()-0.5)*400+"px");
-    fire.style.setProperty("--y",(Math.random()-0.5)*400+"px");
+    fire.style.setProperty("--x",(Math.random()-0.5)*500+"px");
+    fire.style.setProperty("--y",(Math.random()-0.5)*500+"px");
     document.body.appendChild(fire);
     setTimeout(()=>fire.remove(),1000);
   }
