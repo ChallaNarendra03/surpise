@@ -56,7 +56,26 @@ body{
   display:none;
 }
 
-/* FIXED CENTERED SLIDER */
+/* TOP NAME */
+.name{
+  position:absolute;
+  top:20px;
+  width:100%;
+  font-size:50px;
+  font-weight:bold;
+  background:linear-gradient(45deg,#ff0080,#ffcc00);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  animation:glow 2s infinite alternate;
+  z-index:2;
+}
+
+@keyframes glow{
+  from{text-shadow:0 0 20px #ff0080;}
+  to{text-shadow:0 0 40px #ffcc00;}
+}
+
+/* SLIDER FIXED CENTER */
 .slider{
   position:fixed;
   top:0;
@@ -91,30 +110,13 @@ body{
   100%{opacity:0;}
 }
 
-/* Countdown */
+/* COUNTDOWN */
 #countdown{
-  font-size:45px;
-  margin-top:40vh;
+  font-size:40px;
+  margin-top:45vh;
 }
 
-/* Name */
-.name{
-  display:none;
-  font-size:60px;
-  font-weight:bold;
-  margin-top:20vh;
-  background:linear-gradient(45deg,#ff0080,#ffcc00);
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-  animation:glow 2s infinite alternate;
-}
-
-@keyframes glow{
-  from{text-shadow:0 0 20px #ff0080;}
-  to{text-shadow:0 0 40px #ffcc00;}
-}
-
-/* Floating Hearts */
+/* HEARTS */
 .heart{
   position:absolute;
   animation:float 6s linear infinite;
@@ -125,15 +127,15 @@ body{
   100%{transform:translateY(-10vh);opacity:0;}
 }
 
-/* Envelope */
+/* ENVELOPE */
 .envelope{
   display:none;
   font-size:60px;
   cursor:pointer;
-  margin-top:30px;
+  margin-top:20px;
 }
 
-/* Letter */
+/* LETTER */
 #letter{
   display:none;
   width:85%;
@@ -142,7 +144,7 @@ body{
   white-space:pre-line;
 }
 
-/* Fireworks */
+/* FIREWORKS */
 .firework{
   position:absolute;
   width:5px;
@@ -180,15 +182,15 @@ body{
   <img src="photo3.jpg">
 </div>
 
-<div id="countdown">3</div>
-
 <div class="name">Chandana 💖</div>
+
+<div id="countdown">3</div>
 
 <div class="envelope" onclick="openLetter()">💌</div>
 
 <div id="letter"></div>
 
-<audio autoplay loop>
+<audio id="bgMusic" loop>
   <source src="music.mp3" type="audio/mp3">
 </audio>
 
@@ -202,17 +204,21 @@ function checkPassword(){
   if(input==="Chandana"){
     document.getElementById("passwordScreen").style.display="none";
     document.getElementById("mainContent").style.display="block";
+    
+    // Start music after click
+    let music=document.getElementById("bgMusic");
+    music.play();
+
     startExperience();
   }else{
     document.getElementById("error").innerHTML="Wrong Password ❤️";
   }
 }
 
-/* EXPERIENCE START */
+/* START EXPERIENCE */
 function startExperience(){
   let count=3;
   let countdown=document.getElementById("countdown");
-  let nameDiv=document.querySelector(".name");
   let envelope=document.querySelector(".envelope");
 
   let timer=setInterval(()=>{
@@ -222,9 +228,8 @@ function startExperience(){
     }else{
       clearInterval(timer);
       countdown.style.display="none";
-      nameDiv.style.display="block";
       createHearts();
-      setTimeout(()=>{envelope.style.display="block";},2000);
+      envelope.style.display="block";
     }
   },1000);
 }
