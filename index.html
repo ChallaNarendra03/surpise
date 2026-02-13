@@ -25,24 +25,25 @@ body{
   align-items:center;
   color:white;
   text-align:center;
+  transition:opacity 1s ease;
 }
 
 #passwordScreen input{
-  padding:10px;
+  padding:12px;
   font-size:18px;
-  border-radius:10px;
+  border-radius:25px;
   border:none;
   text-align:center;
 }
 
 #passwordScreen button{
-  margin-top:10px;
-  padding:8px 20px;
+  margin-top:15px;
+  padding:10px 25px;
   font-size:16px;
   border:none;
-  border-radius:20px;
+  border-radius:25px;
   cursor:pointer;
-  background:#ff0080;
+  background:#e50914;
   color:white;
 }
 
@@ -51,58 +52,34 @@ body{
   margin-top:10px;
 }
 
-/* MAIN */
+/* MAIN CONTENT */
 #mainContent{
   display:none;
-  color:black;
-}
-
-/* NAME AT TOP */
-.name{
-  position:absolute;
-  top:20px;
-  width:100%;
-  text-align:center;
-  font-size:50px;
-  font-weight:bold;
-  background:linear-gradient(45deg,#ff0080,#ffcc00);
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-  animation:glow 2s infinite alternate;
-  z-index:3;
-}
-
-@keyframes glow{
-  from{text-shadow:0 0 20px #ff0080;}
-  to{text-shadow:0 0 40px #ffcc00;}
+  opacity:0;
+  transition:opacity 2s ease;
 }
 
 /* BACKGROUND SLIDER */
 .slider{
   position:fixed;
-  top:0;
-  left:0;
   width:100%;
   height:100vh;
   overflow:hidden;
-  z-index:-2;
+  z-index:-3;
 }
 
 .slider img{
   position:absolute;
-  top:50%;
-  left:50%;
   width:100%;
   height:100%;
   object-fit:cover;
-  transform:translate(-50%,-50%);
   opacity:0;
-  animation:slide 15s infinite;
+  animation:slide 18s infinite;
 }
 
 .slider img:nth-child(1){animation-delay:0s;}
-.slider img:nth-child(2){animation-delay:5s;}
-.slider img:nth-child(3){animation-delay:10s;}
+.slider img:nth-child(2){animation-delay:6s;}
+.slider img:nth-child(3){animation-delay:12s;}
 
 @keyframes slide{
   0%{opacity:0;}
@@ -112,50 +89,68 @@ body{
   100%{opacity:0;}
 }
 
-/* COUNTDOWN */
-#countdown{
-  position:absolute;
-  top:45%;
+/* DARK CINEMATIC OVERLAY */
+.overlay{
+  position:fixed;
   width:100%;
-  text-align:center;
-  font-size:50px;
-  color:white;
+  height:100vh;
+  background:rgba(0,0,0,0.6);
+  z-index:-2;
 }
 
-/* MESSAGE BOX */
-#message{
-  display:none;
+/* NAME */
+.name{
   position:absolute;
-  bottom:10%;
-  left:50%;
-  transform:translateX(-50%);
-  width:80%;
-  background:rgba(255,255,255,0.85);
-  padding:25px;
-  border-radius:15px;
-  font-size:20px;
-  line-height:1.6;
-  color:black;
+  top:25%;
+  width:100%;
   text-align:center;
+  font-size:60px;
+  font-weight:bold;
+  color:white;
+  letter-spacing:4px;
+  opacity:0;
+  animation:fadeName 3s forwards;
+}
+
+@keyframes fadeName{
+  to{opacity:1;}
+}
+
+/* MESSAGE */
+#message{
+  position:absolute;
+  bottom:15%;
+  width:100%;
+  text-align:center;
+  font-size:22px;
+  color:white;
+  opacity:0;
+  animation:fadeMessage 4s forwards;
+  animation-delay:3s;
+}
+
+@keyframes fadeMessage{
+  to{opacity:1;}
 }
 
 /* HEARTS */
 .heart{
   position:absolute;
-  animation:float 6s linear infinite;
+  animation:float 8s linear infinite;
 }
 
 @keyframes float{
-  0%{transform:translateY(100vh);opacity:1;}
+  0%{transform:translateY(100vh);opacity:0;}
+  20%{opacity:1;}
   100%{transform:translateY(-10vh);opacity:0;}
 }
 
 /* FIREWORKS */
 .firework{
   position:absolute;
-  width:5px;
-  height:5px;
-  background:yellow;
+  width:4px;
+  height:4px;
+  background:#ffcc00;
   border-radius:50%;
   animation:explode 1s ease-out forwards;
 }
@@ -173,7 +168,7 @@ body{
 
 <!-- PASSWORD -->
 <div id="passwordScreen">
-  <h2>Enter the Secret Password 💖</h2>
+  <h2>Enter the Secret Password</h2>
   <input type="password" id="passwordInput" placeholder="Enter password">
   <button onclick="checkPassword()">Unlock</button>
   <div id="error"></div>
@@ -188,22 +183,15 @@ body{
   <img src="photo3.jpg">
 </div>
 
-<div class="name">Chandana 💖</div>
+<div class="overlay"></div>
 
-<div id="countdown">3</div>
+<div class="name">Chandana</div>
 
 <div id="message">
-You are not my lover…
-
-But you are the only person I trust completely.
-
+You are not my lover… <br><br>
+But you are the only person I trust completely. <br><br>
 Even if I don’t talk much in front of you,
-my heart speaks a thousand words when I see you.
-
-Seeing you even for a few seconds
-feels like the biggest adventure of my life.
-
-Thank you for being my world, Chandana 💖
+my heart speaks when I see you.
 </div>
 
 <audio id="bgMusic" loop>
@@ -214,40 +202,26 @@ Thank you for being my world, Chandana 💖
 
 <script>
 
-/* PASSWORD */
 function checkPassword(){
   let input=document.getElementById("passwordInput").value;
   if(input==="Chandana"){
-    document.getElementById("passwordScreen").style.display="none";
-    document.getElementById("mainContent").style.display="block";
+    document.getElementById("passwordScreen").style.opacity="0";
+    setTimeout(()=>{
+      document.getElementById("passwordScreen").style.display="none";
+      document.getElementById("mainContent").style.display="block";
+      setTimeout(()=>{
+        document.getElementById("mainContent").style.opacity="1";
+      },100);
+    },800);
+
     document.getElementById("bgMusic").play();
-    startExperience();
+    createHearts();
+    setTimeout(fireworks,4000);
   }else{
     document.getElementById("error").innerHTML="Wrong Password ❤️";
   }
 }
 
-/* EXPERIENCE */
-function startExperience(){
-  let count=3;
-  let countdown=document.getElementById("countdown");
-  let message=document.getElementById("message");
-
-  let timer=setInterval(()=>{
-    count--;
-    if(count>0){
-      countdown.innerHTML=count;
-    }else{
-      clearInterval(timer);
-      countdown.style.display="none";
-      message.style.display="block";
-      createHearts();
-      fireworks();
-    }
-  },1000);
-}
-
-/* HEARTS */
 function createHearts(){
   setInterval(()=>{
     let heart=document.createElement("div");
@@ -255,21 +229,19 @@ function createHearts(){
     heart.innerHTML="❤️";
     heart.style.left=Math.random()*100+"vw";
     heart.style.fontSize=Math.random()*20+15+"px";
-    heart.style.animationDuration=Math.random()*3+3+"s";
     document.body.appendChild(heart);
-    setTimeout(()=>heart.remove(),6000);
-  },500);
+    setTimeout(()=>heart.remove(),8000);
+  },800);
 }
 
-/* FIREWORKS */
 function fireworks(){
-  for(let i=0;i<60;i++){
+  for(let i=0;i<40;i++){
     let fire=document.createElement("div");
     fire.className="firework";
     fire.style.left="50%";
     fire.style.top="50%";
-    fire.style.setProperty("--x",(Math.random()-0.5)*500+"px");
-    fire.style.setProperty("--y",(Math.random()-0.5)*500+"px");
+    fire.style.setProperty("--x",(Math.random()-0.5)*600+"px");
+    fire.style.setProperty("--y",(Math.random()-0.5)*600+"px");
     document.body.appendChild(fire);
     setTimeout(()=>fire.remove(),1000);
   }
