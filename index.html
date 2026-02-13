@@ -75,7 +75,7 @@ body{
   to{text-shadow:0 0 40px #ffcc00;}
 }
 
-/* SLIDER FIXED CENTER */
+/* SLIDER */
 .slider{
   position:fixed;
   top:0;
@@ -112,7 +112,7 @@ body{
 
 /* COUNTDOWN */
 #countdown{
-  font-size:40px;
+  font-size:50px;
   margin-top:45vh;
 }
 
@@ -125,23 +125,6 @@ body{
 @keyframes float{
   0%{transform:translateY(100vh);opacity:1;}
   100%{transform:translateY(-10vh);opacity:0;}
-}
-
-/* ENVELOPE */
-.envelope{
-  display:none;
-  font-size:60px;
-  cursor:pointer;
-  margin-top:20px;
-}
-
-/* LETTER */
-#letter{
-  display:none;
-  width:85%;
-  margin:20px auto;
-  font-size:20px;
-  white-space:pre-line;
 }
 
 /* FIREWORKS */
@@ -173,7 +156,7 @@ body{
   <div id="error"></div>
 </div>
 
-<!-- MAIN CONTENT -->
+<!-- MAIN -->
 <div id="mainContent">
 
 <div class="slider">
@@ -186,10 +169,6 @@ body{
 
 <div id="countdown">3</div>
 
-<div class="envelope" onclick="openLetter()">💌</div>
-
-<div id="letter"></div>
-
 <audio id="bgMusic" loop>
   <source src="music.mp3" type="audio/mp3">
 </audio>
@@ -198,14 +177,13 @@ body{
 
 <script>
 
-/* PASSWORD CHECK */
+/* PASSWORD */
 function checkPassword(){
   let input=document.getElementById("passwordInput").value;
   if(input==="Chandana"){
     document.getElementById("passwordScreen").style.display="none";
     document.getElementById("mainContent").style.display="block";
     
-    // Start music after click
     let music=document.getElementById("bgMusic");
     music.play();
 
@@ -215,11 +193,10 @@ function checkPassword(){
   }
 }
 
-/* START EXPERIENCE */
+/* EXPERIENCE */
 function startExperience(){
   let count=3;
   let countdown=document.getElementById("countdown");
-  let envelope=document.querySelector(".envelope");
 
   let timer=setInterval(()=>{
     count--;
@@ -229,7 +206,7 @@ function startExperience(){
       clearInterval(timer);
       countdown.style.display="none";
       createHearts();
-      envelope.style.display="block";
+      fireworks();
     }
   },1000);
 }
@@ -248,45 +225,15 @@ function createHearts(){
   },500);
 }
 
-/* LETTER */
-function openLetter(){
-  document.querySelector(".envelope").style.display="none";
-  let letter=document.getElementById("letter");
-  letter.style.display="block";
-
-  let text=`You are not my lover…
-But you are the only person I trust completely.
-
-Even if I don’t talk much in front of you,
-my heart speaks a thousand words when I see you.
-
-Seeing you even for a few seconds
-feels like the biggest adventure of my life.
-
-Thank you for being my world, Chandana 💖`;
-
-  let i=0;
-  function typing(){
-    if(i<text.length){
-      letter.innerHTML+=text.charAt(i);
-      i++;
-      setTimeout(typing,40);
-    }else{
-      fireworks();
-    }
-  }
-  typing();
-}
-
 /* FIREWORKS */
 function fireworks(){
-  for(let i=0;i<60;i++){
+  for(let i=0;i<80;i++){
     let fire=document.createElement("div");
     fire.className="firework";
     fire.style.left="50%";
     fire.style.top="50%";
-    fire.style.setProperty("--x",(Math.random()-0.5)*500+"px");
-    fire.style.setProperty("--y",(Math.random()-0.5)*500+"px");
+    fire.style.setProperty("--x",(Math.random()-0.5)*600+"px");
+    fire.style.setProperty("--y",(Math.random()-0.5)*600+"px");
     document.body.appendChild(fire);
     setTimeout(()=>fire.remove(),1000);
   }
