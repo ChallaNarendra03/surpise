@@ -10,8 +10,6 @@ body{
   padding:0;
   background:black;
   font-family:'Segoe UI',sans-serif;
-  color:white;
-  text-align:center;
   overflow:hidden;
 }
 
@@ -25,6 +23,8 @@ body{
   flex-direction:column;
   justify-content:center;
   align-items:center;
+  color:white;
+  text-align:center;
 }
 
 #passwordScreen input{
@@ -51,12 +51,33 @@ body{
   margin-top:10px;
 }
 
-/* MAIN CONTENT */
+/* MAIN */
 #mainContent{
   display:none;
+  color:black;
 }
 
-/* FIXED CENTERED SLIDER */
+/* NAME AT TOP */
+.name{
+  position:absolute;
+  top:20px;
+  width:100%;
+  text-align:center;
+  font-size:50px;
+  font-weight:bold;
+  background:linear-gradient(45deg,#ff0080,#ffcc00);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  animation:glow 2s infinite alternate;
+  z-index:3;
+}
+
+@keyframes glow{
+  from{text-shadow:0 0 20px #ff0080;}
+  to{text-shadow:0 0 40px #ffcc00;}
+}
+
+/* BACKGROUND SLIDER */
 .slider{
   position:fixed;
   top:0;
@@ -91,30 +112,34 @@ body{
   100%{opacity:0;}
 }
 
-/* Countdown */
+/* COUNTDOWN */
 #countdown{
-  font-size:45px;
-  margin-top:40vh;
+  position:absolute;
+  top:45%;
+  width:100%;
+  text-align:center;
+  font-size:50px;
+  color:white;
 }
 
-/* Name */
-.name{
+/* MESSAGE BOX */
+#message{
   display:none;
-  font-size:60px;
-  font-weight:bold;
-  margin-top:20vh;
-  background:linear-gradient(45deg,#ff0080,#ffcc00);
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-  animation:glow 2s infinite alternate;
+  position:absolute;
+  bottom:10%;
+  left:50%;
+  transform:translateX(-50%);
+  width:80%;
+  background:rgba(255,255,255,0.85);
+  padding:25px;
+  border-radius:15px;
+  font-size:20px;
+  line-height:1.6;
+  color:black;
+  text-align:center;
 }
 
-@keyframes glow{
-  from{text-shadow:0 0 20px #ff0080;}
-  to{text-shadow:0 0 40px #ffcc00;}
-}
-
-/* Floating Hearts */
+/* HEARTS */
 .heart{
   position:absolute;
   animation:float 6s linear infinite;
@@ -125,24 +150,7 @@ body{
   100%{transform:translateY(-10vh);opacity:0;}
 }
 
-/* Envelope */
-.envelope{
-  display:none;
-  font-size:60px;
-  cursor:pointer;
-  margin-top:30px;
-}
-
-/* Letter */
-#letter{
-  display:none;
-  width:85%;
-  margin:20px auto;
-  font-size:20px;
-  white-space:pre-line;
-}
-
-/* Fireworks */
+/* FIREWORKS */
 .firework{
   position:absolute;
   width:5px;
@@ -180,15 +188,25 @@ body{
   <img src="photo3.jpg">
 </div>
 
-<div id="countdown">3</div>
-
 <div class="name">Chandana 💖</div>
 
-<div class="envelope" onclick="openLetter()"></div>
+<div id="countdown">3</div>
 
-<div id="letter"></div>
+<div id="message">
+You are not my lover…
 
-<audio autoplay loop>
+But you are the only person I trust completely.
+
+Even if I don’t talk much in front of you,
+my heart speaks a thousand words when I see you.
+
+Seeing you even for a few seconds
+feels like the biggest adventure of my life.
+
+Thank you for being my world, Chandana 💖
+</div>
+
+<audio id="bgMusic" loop>
   <source src="music.mp3" type="audio/mp3">
 </audio>
 
@@ -196,24 +214,24 @@ body{
 
 <script>
 
-/* PASSWORD CHECK */
+/* PASSWORD */
 function checkPassword(){
   let input=document.getElementById("passwordInput").value;
   if(input==="Chandana"){
     document.getElementById("passwordScreen").style.display="none";
     document.getElementById("mainContent").style.display="block";
+    document.getElementById("bgMusic").play();
     startExperience();
   }else{
     document.getElementById("error").innerHTML="Wrong Password ❤️";
   }
 }
 
-/* EXPERIENCE START */
+/* EXPERIENCE */
 function startExperience(){
   let count=3;
   let countdown=document.getElementById("countdown");
-  let nameDiv=document.querySelector(".name");
-  let envelope=document.querySelector(".envelope");
+  let message=document.getElementById("message");
 
   let timer=setInterval(()=>{
     count--;
@@ -222,9 +240,9 @@ function startExperience(){
     }else{
       clearInterval(timer);
       countdown.style.display="none";
-      nameDiv.style.display="block";
+      message.style.display="block";
       createHearts();
-      setTimeout(()=>{envelope.style.display="block";},2000);
+      fireworks();
     }
   },1000);
 }
@@ -241,36 +259,6 @@ function createHearts(){
     document.body.appendChild(heart);
     setTimeout(()=>heart.remove(),6000);
   },500);
-}
-
-/* LETTER */
-function openLetter(){
-  document.querySelector(".envelope").style.display="none";
-  let letter=document.getElementById("letter");
-  letter.style.display="block";
-
-  let text=`You are not my lover…
-But you are the only person I trust completely.
-
-Even if I don’t talk much in front of you,
-my heart speaks a thousand words when I see you.
-
-Seeing you even for a few seconds
-feels like the biggest adventure of my life.
-
-Thank you for being my world, Chandana 💖`;
-
-  let i=0;
-  function typing(){
-    if(i<text.length){
-      letter.innerHTML+=text.charAt(i);
-      i++;
-      setTimeout(typing,40);
-    }else{
-      fireworks();
-    }
-  }
-  typing();
 }
 
 /* FIREWORKS */
