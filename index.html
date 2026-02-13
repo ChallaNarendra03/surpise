@@ -3,16 +3,16 @@
 <head>
 <title>For Chandana 💖</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <style>
+
 body{
   margin:0;
   padding:0;
   background:black;
+  overflow:hidden;
   font-family:'Segoe UI',sans-serif;
   color:white;
   text-align:center;
-  overflow:hidden;
 }
 
 /* PASSWORD SCREEN */
@@ -27,7 +27,7 @@ body{
   align-items:center;
 }
 
-#passwordScreen input{
+input{
   padding:10px;
   font-size:18px;
   border-radius:10px;
@@ -35,7 +35,7 @@ body{
   text-align:center;
 }
 
-#passwordScreen button{
+button{
   margin-top:10px;
   padding:8px 20px;
   font-size:16px;
@@ -56,48 +56,16 @@ body{
   display:none;
 }
 
-/* TOP NAME */
-.name{
-  position:absolute;
-  top:20px;
-  width:100%;
-  font-size:50px;
-  font-weight:bold;
-  background:linear-gradient(45deg,#ff0080,#ffcc00);
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-  animation:glow 2s infinite alternate;
-  z-index:2;
-}
-
-@keyframes glow{
-  from{text-shadow:0 0 20px #ff0080;}
-  to{text-shadow:0 0 40px #ffcc00;}
-}
-
-/* SLIDER */
-.slider{
+/* Background slider */
+.slider img{
   position:fixed;
-  top:0;
-  left:0;
   width:100%;
   height:100vh;
-  overflow:hidden;
-  z-index:-2;
-}
-
-.slider img{
-  position:absolute;
-  top:50%;
-  left:50%;
-  width:100%;
-  height:100%;
   object-fit:cover;
-  transform:translate(-50%,-50%);
   opacity:0;
   animation:slide 15s infinite;
+  z-index:-2;
 }
-
 .slider img:nth-child(1){animation-delay:0s;}
 .slider img:nth-child(2){animation-delay:5s;}
 .slider img:nth-child(3){animation-delay:10s;}
@@ -110,33 +78,56 @@ body{
   100%{opacity:0;}
 }
 
-/* COUNTDOWN */
-#countdown{
-  font-size:40px;
-  margin-top:45vh;
-}
-
-/* MESSAGE */
-#message{
-  display:none;
-  width:85%;
-  margin:20px auto;
-  font-size:20px;
-  white-space:pre-line;
-}
-
-/* HEARTS */
+/* Floating hearts */
 .heart{
   position:absolute;
-  animation:float 6s linear infinite;
+  animation: float 6s linear infinite;
 }
-
 @keyframes float{
   0%{transform:translateY(100vh);opacity:1;}
   100%{transform:translateY(-10vh);opacity:0;}
 }
 
-/* FIREWORKS */
+/* Countdown */
+#countdown{
+  font-size:40px;
+  margin-top:40vh;
+}
+
+/* Name */
+.name{
+  display:none;
+  font-size:60px;
+  font-weight:bold;
+  margin-top:20vh;
+  background:linear-gradient(45deg,#ff0080,#ffcc00);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  animation: glow 2s infinite alternate;
+}
+@keyframes glow{
+  from{text-shadow:0 0 20px #ff0080;}
+  to{text-shadow:0 0 40px #ffcc00;}
+}
+
+/* Envelope */
+.envelope{
+  display:none;
+  font-size:60px;
+  cursor:pointer;
+  margin-top:30px;
+}
+
+/* Letter */
+#letter{
+  display:none;
+  width:80%;
+  margin:20px auto;
+  font-size:20px;
+  white-space:pre-line;
+}
+
+/* Fireworks */
 .firework{
   position:absolute;
   width:5px;
@@ -145,19 +136,19 @@ body{
   border-radius:50%;
   animation:explode 1s ease-out forwards;
 }
-
 @keyframes explode{
   to{
     transform:translate(var(--x),var(--y));
     opacity:0;
   }
 }
+
 </style>
 </head>
 
 <body>
 
-<!-- PASSWORD -->
+<!-- PASSWORD SCREEN -->
 <div id="passwordScreen">
   <h2>Enter the Secret Password 💖</h2>
   <input type="password" id="passwordInput" placeholder="Enter password">
@@ -165,7 +156,7 @@ body{
   <div id="error"></div>
 </div>
 
-<!-- MAIN -->
+<!-- MAIN CONTENT -->
 <div id="mainContent">
 
 <div class="slider">
@@ -174,25 +165,15 @@ body{
   <img src="photo3.jpg">
 </div>
 
-<div class="name">Chandana 💖</div>
-
 <div id="countdown">3</div>
 
-<div id="message">
-You are not my lover…
+<div class="name">Chandana 💖</div>
 
-But you are the only person I trust completely.
+<div class="envelope" onclick="openLetter()">💌</div>
 
-Even if I don’t talk much in front of you,
-my heart speaks a thousand words when I see you.
+<div id="letter"></div>
 
-Seeing you even for a few seconds
-feels like the biggest adventure of my life.
-
-Thank you for being my world, Chandana 💖
-</div>
-
-<audio id="bgMusic" loop>
+<audio autoplay loop>
   <source src="music.mp3" type="audio/mp3">
 </audio>
 
@@ -200,25 +181,24 @@ Thank you for being my world, Chandana 💖
 
 <script>
 
-/* PASSWORD */
+/* PASSWORD CHECK */
 function checkPassword(){
   let input=document.getElementById("passwordInput").value;
   if(input==="Chandana"){
     document.getElementById("passwordScreen").style.display="none";
     document.getElementById("mainContent").style.display="block";
-    
-    document.getElementById("bgMusic").play();
     startExperience();
   }else{
     document.getElementById("error").innerHTML="Wrong Password ❤️";
   }
 }
 
-/* EXPERIENCE */
+/* START EXPERIENCE */
 function startExperience(){
   let count=3;
   let countdown=document.getElementById("countdown");
-  let message=document.getElementById("message");
+  let nameDiv=document.querySelector(".name");
+  let envelope=document.querySelector(".envelope");
 
   let timer=setInterval(()=>{
     count--;
@@ -227,36 +207,65 @@ function startExperience(){
     }else{
       clearInterval(timer);
       countdown.style.display="none";
-      message.style.display="block";
+      nameDiv.style.display="block";
       createHearts();
-      fireworks();
+      setTimeout(()=>{envelope.style.display="block";},2000);
     }
   },1000);
 }
 
-/* HEARTS */
+/* Floating Hearts */
 function createHearts(){
   setInterval(()=>{
     let heart=document.createElement("div");
     heart.className="heart";
     heart.innerHTML="❤️";
     heart.style.left=Math.random()*100+"vw";
-    heart.style.fontSize=Math.random()*20+15+"px";
+    heart.style.fontSize=Math.random()*20+10+"px";
     heart.style.animationDuration=Math.random()*3+3+"s";
     document.body.appendChild(heart);
     setTimeout(()=>heart.remove(),6000);
   },500);
 }
 
-/* FIREWORKS */
+/* Typing Effect */
+function openLetter(){
+  document.querySelector(".envelope").style.display="none";
+  let letter=document.getElementById("letter");
+  letter.style.display="block";
+  let text=`You are not my lover…
+But you are the only person I trust completely.
+
+Even if I don’t talk much in front of you,
+my heart speaks a thousand words when I see you.
+
+Seeing you even for a few seconds
+feels like the biggest adventure of my life.
+
+Thank you for being my world, Chandana 💖`;
+
+  let i=0;
+  function typing(){
+    if(i<text.length){
+      letter.innerHTML+=text.charAt(i);
+      i++;
+      setTimeout(typing,40);
+    }else{
+      fireworks();
+    }
+  }
+  typing();
+}
+
+/* Fireworks */
 function fireworks(){
-  for(let i=0;i<60;i++){
+  for(let i=0;i<50;i++){
     let fire=document.createElement("div");
     fire.className="firework";
     fire.style.left="50%";
     fire.style.top="50%";
-    fire.style.setProperty("--x",(Math.random()-0.5)*500+"px");
-    fire.style.setProperty("--y",(Math.random()-0.5)*500+"px");
+    fire.style.setProperty("--x",(Math.random()-0.5)*400+"px");
+    fire.style.setProperty("--y",(Math.random()-0.5)*400+"px");
     document.body.appendChild(fire);
     setTimeout(()=>fire.remove(),1000);
   }
